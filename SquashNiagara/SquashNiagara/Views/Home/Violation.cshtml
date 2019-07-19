@@ -1,0 +1,291 @@
+﻿@model IEnumerable<SquashNiagara.Models.Fixture>
+
+@{
+    ViewData["Title"] = "Violation";
+}
+
+<h1 class="text-center">Squash Niagara Historical Reports</h1>
+
+
+<form asp-action="Violation">
+    <div class="form-inline">
+        <div class="row ">
+            <div class="form-group col-sm-10 ">
+                @foreach (Division i in @ViewBag.DivisionID)
+                {
+                    <button name="DivisionID" value="@i.ID" class="btn btn-primary btn-sm">@i.Name</button>
+                }
+            </div>
+            <div class="form-group col-sm-2 ">
+                <label class="col-sm-5" style="margin-left:10px;">Season</label>
+                <div class="col-sm-7">@Html.DropDownList("SeasonID", (SelectList)ViewBag.SeasonID, new { @class = "form-control input-sm", onchange = "this.form.submit();" })</div>
+
+            </div>
+        </div>
+    </div>
+</form>
+<br /><br />
+<table id="indxFix" class="table table-striped table-bordered nowrap" style="width: 100%">
+    <thead>
+        <tr>
+            <th>
+                <small> @Html.DisplayNameFor(model => model.Date)</small>
+            </th>
+            <th>
+                <small>Team</small>
+            </th>
+
+            @for (int i = 1; i < ViewBag.Positions; i++)
+            {
+                <th>
+                    <small>Position @i</small>
+                </th>
+            }
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HomeTeam.Name)
+            </td>
+
+            @*@foreach (var match in item.Matches)
+        {
+            string violation = "";
+
+            if (match.HomePlayerViolation == true)
+            {
+                violation = "#FFFF00";
+            }
+            <td bgcolor="@violation">
+                @Html.DisplayFor(modelMatchItem => match.HomePlayer.FullName)
+            </td>
+        }*@
+            @{
+                string p1Viol = "";
+                string p2Viol = "";
+                string p3Viol = "";
+                string p4Viol = "";
+                string p5Viol = "";
+                string p1Name = "";
+                string p2Name = "";
+                string p3Name = "";
+                string p4Name = "";
+                string p5Name = "";
+
+                foreach (var match in item.Matches)
+                {
+
+
+                    if (match.HomePlayerViolation == true)
+                    {
+                        if (match.PositionID == 1)
+                        {
+                            p1Viol = "#FFFF00";
+                        }
+                        if (match.PositionID == 2)
+                        {
+                            p2Viol = "#FFFF00";
+                        }
+                        if (match.PositionID == 3)
+                        {
+                            p3Viol = "#FFFF00";
+                        }
+                        if (match.PositionID == 4)
+                        {
+                            p4Viol = "#FFFF00";
+                        }
+                        if (match.PositionID == 5)
+                        {
+                            p5Viol = "#FFFF00";
+                        }
+                    }
+                    if (match.PositionID == 1)
+                    {
+                        p1Name = match.HomePlayer.FullName;
+                    }
+                    if (match.PositionID == 2)
+                    {
+                        p2Name = match.HomePlayer.FullName;
+                    }
+                    if (match.PositionID == 3)
+                    {
+                        p3Name = match.HomePlayer.FullName;
+                    }
+                    if (match.PositionID == 4)
+                    {
+                        p4Name = match.HomePlayer.FullName;
+                    }
+                    if (match.PositionID == 5)
+                    {
+                        p5Name = match.HomePlayer.FullName;
+                    }
+
+                }
+                <td bgcolor="@p1Viol">
+                    @p1Name
+                </td>
+                <td bgcolor="@p2Viol">
+                    @p2Name
+                </td>
+                <td bgcolor="@p3Viol">
+                    @p3Name
+                </td>
+                <td bgcolor="@p4Viol">
+                    @p4Name
+                </td>
+                if (p5Name != "")
+                {
+                    <td bgcolor="@p5Viol">
+                        @p5Name
+                    </td>
+                }
+
+            }
+
+            <td>
+                <small>
+                    <a asp-action="FixtureDetails" asp-route-id="@item.ID">Details</a>
+                </small>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AwayTeam.Name)
+            </td>
+
+
+
+            @*@foreach (var match in item.Matches)
+        {
+            string violation = "";
+
+            if (match.AwayPlayerViolation == true)
+            {
+                violation = "#FFFF00";
+            }
+            <td bgcolor="@violation">
+                @Html.DisplayFor(modelMatchItem => match.AwayPlayer.FullName)
+            </td>
+        }*@
+
+            @{
+                string p1aViol = "";
+                string p2aViol = "";
+                string p3aViol = "";
+                string p4aViol = "";
+                string p5aViol = "";
+                string p1aName = "";
+                string p2aName = "";
+                string p3aName = "";
+                string p4aName = "";
+                string p5aName = "";
+
+                foreach (var match in item.Matches)
+                {
+
+
+                    if (match.AwayPlayerViolation == true)
+                    {
+                        if (match.PositionID == 1)
+                        {
+                            p1Viol = "#FFFF00";
+                        }
+                        if (match.PositionID == 2)
+                        {
+                            p2Viol = "#FFFF00";
+                        }
+                        if (match.PositionID == 3)
+                        {
+                            p3Viol = "#FFFF00";
+                        }
+                        if (match.PositionID == 4)
+                        {
+                            p4Viol = "#FFFF00";
+                        }
+                        if (match.PositionID == 5)
+                        {
+                            p5Viol = "#FFFF00";
+                        }
+                    }
+                    if (match.PositionID == 1)
+                    {
+                        p1aName = match.AwayPlayer.FullName;
+                    }
+                    if (match.PositionID == 2)
+                    {
+                        p2aName = match.AwayPlayer.FullName;
+                    }
+                    if (match.PositionID == 3)
+                    {
+                        p3aName = match.AwayPlayer.FullName;
+                    }
+                    if (match.PositionID == 4)
+                    {
+                        p4aName = match.AwayPlayer.FullName;
+                    }
+                    if (match.PositionID == 5)
+                    {
+                        p5aName = match.AwayPlayer.FullName;
+                    }
+
+                }
+                <td bgcolor="@p1aViol">
+                    @p1aName
+                </td>
+                <td bgcolor="@p2aViol">
+                    @p2aName
+                </td>
+                <td bgcolor="@p3aViol">
+                    @p3aName
+                </td>
+                <td bgcolor="@p4aViol">
+                    @p4aName
+                </td>
+                if (p5aName != "")
+                {
+                    <td bgcolor="@p5aViol">
+                        @p5aName
+                    </td>
+                }
+
+            }
+
+            <td>
+                <small>
+                    <a asp-action="FixtureDetails" asp-route-id="@item.ID">Details</a>
+                </small>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.5/css/fixedHeader.bootstrap.min.css" />
+<link rel="stylesheet" href=" https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css" />
+@section scripts{
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script src=" https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#indxFix').DataTable({
+                "order": [[0, "asc"]],
+                responsive: true
+            });
+        });
+    </script>
+
+}
